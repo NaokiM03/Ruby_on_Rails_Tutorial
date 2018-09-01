@@ -4,13 +4,13 @@ ENV LANG C.UTF-8
 
 RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs mysql-client
 
-RUN mkdir /rails_app
 WORKDIR /rails_app
 
-ADD Gemfile /rails_app/Gemfile
-ADD Gemfile.lock /rails_app/Gemfile.lock
-
 RUN gem install bundler
-RUN bundle install
+
+ADD Gemfile .
+ADD Gemfile.lock .
+
+RUN bundle install --jobs=4
 
 ADD . /rails_app
